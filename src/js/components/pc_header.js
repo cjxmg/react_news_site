@@ -109,7 +109,7 @@ class PcHeader extends React.Component{
 				  	<Menu.Item key="jiankang">
 				  		<Icon type="disconnect" />健康
 				  	</Menu.Item>
-						<Menu.Item key="register" class="register">
+						<Menu.Item key="register" className="register">
 							<Button type="primary">
 								<Icon type="user-add" />登录/注册
 							</Button>

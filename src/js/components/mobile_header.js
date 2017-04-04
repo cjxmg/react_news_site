@@ -58,7 +58,7 @@ class MobileHeader extends React.Component{
     const r_passwordError = isFieldTouched('r_password') && getFieldError('r_password');
 		
 		return (
-			<div id="mobileHeader">
+			<div id="mobileheader">
 				<header>
 					<img src="./src/images/logo.png" alt="logo"/>
 					<span>ReactNews</span>

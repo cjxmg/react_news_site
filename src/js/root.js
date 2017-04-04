@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router,Route,hashHistory} from 'react-router';
 import PcIndex from './components/pc_index';
-import MobileIndex from './components/mobile_index';
+import MobileIndex from './components/mobile_index'; 
 import MediaQuery from 'react-responsive';
 
-export default class Root extends React.Component{
+export default class Root extends React.Component{ 
 	render(){ 
-		return (
+		return ( 
 			<div>   
     		<MediaQuery query='(min-device-width: 1224px)'>
 					<PcIndex/>
