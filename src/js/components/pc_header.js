@@ -142,7 +142,7 @@ class PcHeader extends React.Component{
 									</Form>
 								</TabPane>
 								<TabPane tab="注册" key="2">
-									<Form>
+									<Form onSubmit={this.handleSubmit.bind(this)}>
 
 										<Form.Item label="账户" validateStatus={r_usernameError ? 'error' : ''} help={r_usernameError || ''}>
 											{getFieldDecorator('r_username', {
