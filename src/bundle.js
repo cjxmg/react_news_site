@@ -27591,7 +27591,7 @@
 										{ tab: '\u6CE8\u518C', key: '2' },
 										_react2.default.createElement(
 											_form2.default,
-											null,
+											{ onSubmit: this.handleSubmit.bind(this) },
 											_react2.default.createElement(
 												_form2.default.Item,
 												{ label: '\u8D26\u6237', validateStatus: r_usernameError ? 'error' : '', help: r_usernameError || '' },
