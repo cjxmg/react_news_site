@@ -11,8 +11,13 @@
 <body>
 	<img src="http://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1491370242267&di=75891d3f507d76e7111e5a98416ac78a&imgtype=0&src=http%3A%2F%2Fb.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F0eb30f2442a7d933e9e71571a94bd11373f00160.jpg">
 	<div id="main"></div>
-  <!-- <script type="text/javascript" src="http://localhost:8080/bundle.js"></script> -->
+	<!-- <script type="text/javascript" src="http://localhost:8080/bundle.js"></script> -->
 
-  <script type="text/javascript" src="src/bundle.js"></script>
+	<script type="text/javascript" src="src/bundle.js"></script>
+	<script type="text/javascript">
+		Cookie cookie = new Cookie("JSESSIONID", req.getSession().getId());
+		cookie.setPath(req.getContextPath());
+		resp.addCookie(cookie);
+	</script>
 </body>
 </html>
