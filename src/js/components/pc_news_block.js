@@ -22,7 +22,7 @@ export default class PcNewsBlock extends React.Component {
 
 	render(){
 		const {news} = this.state;
-		console.log(news);
+		// console.log(news);
 		const newsList = news.length
 			? news.map((newsItem, index) => (
 				<li key={index}>

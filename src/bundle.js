@@ -74,6 +74,14 @@
 
 	var _reactResponsive2 = _interopRequireDefault(_reactResponsive);
 
+	var _pc_news_details = __webpack_require__(535);
+
+	var _pc_news_details2 = _interopRequireDefault(_pc_news_details);
+
+	var _mobile_news_details = __webpack_require__(541);
+
+	var _mobile_news_details2 = _interopRequireDefault(_mobile_news_details);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -100,12 +108,22 @@
 					_react2.default.createElement(
 						_reactResponsive2.default,
 						{ query: '(min-device-width: 1224px)' },
-						_react2.default.createElement(_pc_index2.default, null)
+						_react2.default.createElement(
+							_reactRouter.Router,
+							{ history: _reactRouter.hashHistory },
+							_react2.default.createElement(_reactRouter.Route, { path: '/', component: _pc_index2.default }),
+							_react2.default.createElement(_reactRouter.Route, { path: '/details/:uniquekey', component: _pc_news_details2.default })
+						)
 					),
 					_react2.default.createElement(
 						_reactResponsive2.default,
 						{ query: '(max-device-width: 1224px)' },
-						_react2.default.createElement(_mobile_index2.default, null)
+						_react2.default.createElement(
+							_reactRouter.Router,
+							{ history: _reactRouter.hashHistory },
+							_react2.default.createElement(_reactRouter.Route, { path: '/', component: _mobile_index2.default }),
+							_react2.default.createElement(_reactRouter.Route, { path: '/details/:uniquekey', component: _mobile_news_details2.default })
+						)
 					)
 				);
 			}
@@ -52010,8 +52028,8 @@
 			key: 'render',
 			value: function render() {
 				var news = this.state.news;
+				// console.log(news);
 
-				console.log(news);
 				var newsList = news.length ? news.map(function (newsItem, index) {
 					return _react2.default.createElement(
 						'li',
@@ -53579,6 +53597,499 @@
 	});
 	;
 	//# sourceMappingURL=react-responsive.js.map
+
+/***/ },
+/* 535 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _css = __webpack_require__(536);
+
+	var _backTop = __webpack_require__(539);
+
+	var _backTop2 = _interopRequireDefault(_backTop);
+
+	var _css2 = __webpack_require__(243);
+
+	var _row = __webpack_require__(255);
+
+	var _row2 = _interopRequireDefault(_row);
+
+	var _css3 = __webpack_require__(473);
+
+	var _col = __webpack_require__(441);
+
+	var _col2 = _interopRequireDefault(_col);
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _pc_header = __webpack_require__(242);
+
+	var _pc_header2 = _interopRequireDefault(_pc_header);
+
+	var _pc_footer = __webpack_require__(497);
+
+	var _pc_footer2 = _interopRequireDefault(_pc_footer);
+
+	var _pc_news_image_block = __webpack_require__(529);
+
+	var _pc_news_image_block2 = _interopRequireDefault(_pc_news_image_block);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var PcNewsDetails = function (_React$Component) {
+		_inherits(PcNewsDetails, _React$Component);
+
+		function PcNewsDetails() {
+			_classCallCheck(this, PcNewsDetails);
+
+			var _this = _possibleConstructorReturn(this, (PcNewsDetails.__proto__ || Object.getPrototypeOf(PcNewsDetails)).call(this));
+
+			_this.state = {
+				newsItem: ''
+			};
+			return _this;
+		}
+
+		_createClass(PcNewsDetails, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var _this2 = this;
+
+				var myFetchOptions = {
+					method: 'GET'
+				};
+				fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=getnewsitem&uniquekey=" + this.props.params.uniquekey, myFetchOptions).then(function (response) {
+					return response.json();
+				}).then(function (json) {
+					_this2.setState({ newsItem: json });
+					document.title = _this2.state.newsItem.title + " - React News | React 驱动的新闻平台";
+				});
+			}
+
+			//将请求到的html结构放入div里
+
+		}, {
+			key: 'createMarkup',
+			value: function createMarkup() {
+				return { __html: this.state.newsItem.pagecontent };
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(_pc_header2.default, null),
+					_react2.default.createElement(
+						_row2.default,
+						null,
+						_react2.default.createElement(_col2.default, { span: 2 }),
+						_react2.default.createElement(
+							_col2.default,
+							{ span: 14, className: 'container' },
+							_react2.default.createElement('div', { className: 'articleContainer', dangerouslySetInnerHTML: this.createMarkup() })
+						),
+						_react2.default.createElement(
+							_col2.default,
+							{ span: 6 },
+							_react2.default.createElement(_pc_news_image_block2.default, { count: 20, type: 'top', width: '100%', cardTitle: '\u76F8\u5173\u65B0\u95FB', imageWidth: '140px' })
+						),
+						_react2.default.createElement(_col2.default, { span: 2 })
+					),
+					_react2.default.createElement(_pc_footer2.default, null),
+					_react2.default.createElement(_backTop2.default, null)
+				);
+			}
+		}]);
+
+		return PcNewsDetails;
+	}(_react2.default.Component);
+
+	exports.default = PcNewsDetails;
+
+/***/ },
+/* 536 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	__webpack_require__(244);
+
+	__webpack_require__(537);
+
+/***/ },
+/* 537 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(538);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(251)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!../../../../css-loader/index.js!./index.css", function() {
+				var newContent = require("!!../../../../css-loader/index.js!./index.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 538 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(246)(undefined);
+	// imports
+
+
+	// module
+	exports.push([module.id, ".ant-back-top {\n  z-index: 10;\n  position: fixed;\n  right: 100px;\n  bottom: 50px;\n  height: 40px;\n  width: 40px;\n  cursor: pointer;\n}\n.ant-back-top-content {\n  height: 40px;\n  width: 40px;\n  border-radius: 20px;\n  background-color: rgba(64, 64, 64, 0.4);\n  color: #fff;\n  text-align: center;\n  -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);\n  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);\n}\n.ant-back-top-content:hover {\n  background-color: rgba(64, 64, 64, 0.6);\n  -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);\n  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);\n}\n.ant-back-top-icon {\n  font-size: 20px;\n  margin-top: 10px;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 539 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports["default"] = undefined;
+
+	var _extends2 = __webpack_require__(258);
+
+	var _extends3 = _interopRequireDefault(_extends2);
+
+	var _classCallCheck2 = __webpack_require__(300);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(301);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(337);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _rcAnimate = __webpack_require__(358);
+
+	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
+
+	var _addEventListener = __webpack_require__(370);
+
+	var _addEventListener2 = _interopRequireDefault(_addEventListener);
+
+	var _classnames = __webpack_require__(345);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _omit = __webpack_require__(377);
+
+	var _omit2 = _interopRequireDefault(_omit);
+
+	var _icon = __webpack_require__(376);
+
+	var _icon2 = _interopRequireDefault(_icon);
+
+	var _getScroll = __webpack_require__(540);
+
+	var _getScroll2 = _interopRequireDefault(_getScroll);
+
+	var _getRequestAnimationFrame = __webpack_require__(471);
+
+	var _getRequestAnimationFrame2 = _interopRequireDefault(_getRequestAnimationFrame);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var reqAnimFrame = (0, _getRequestAnimationFrame2["default"])();
+	var currentScrollTop = function currentScrollTop() {
+	    return window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
+	};
+	var easeInOutCubic = function easeInOutCubic(t, b, c, d) {
+	    var cc = c - b;
+	    t /= d / 2;
+	    if (t < 1) {
+	        return cc / 2 * t * t * t + b;
+	    } else {
+	        return cc / 2 * ((t -= 2) * t * t + 2) + b;
+	    }
+	};
+	function noop() {}
+	function getDefaultTarget() {
+	    return typeof window !== 'undefined' ? window : null;
+	}
+
+	var BackTop = function (_React$Component) {
+	    (0, _inherits3["default"])(BackTop, _React$Component);
+
+	    function BackTop(props) {
+	        (0, _classCallCheck3["default"])(this, BackTop);
+
+	        var _this = (0, _possibleConstructorReturn3["default"])(this, _React$Component.call(this, props));
+
+	        _this.scrollToTop = function (e) {
+	            var scrollTop = currentScrollTop();
+	            var startTime = Date.now();
+	            var frameFunc = function frameFunc() {
+	                var timestamp = Date.now();
+	                var time = timestamp - startTime;
+	                _this.setScrollTop(easeInOutCubic(time, scrollTop, 0, 450));
+	                if (time < 450) {
+	                    reqAnimFrame(frameFunc);
+	                }
+	            };
+	            reqAnimFrame(frameFunc);
+	            (_this.props.onClick || noop)(e);
+	        };
+	        _this.handleScroll = function () {
+	            var _this$props = _this.props,
+	                visibilityHeight = _this$props.visibilityHeight,
+	                _this$props$target = _this$props.target,
+	                target = _this$props$target === undefined ? getDefaultTarget : _this$props$target;
+
+	            var scrollTop = (0, _getScroll2["default"])(target(), true);
+	            _this.setState({
+	                visible: scrollTop > visibilityHeight
+	            });
+	        };
+	        _this.state = {
+	            visible: false
+	        };
+	        return _this;
+	    }
+
+	    BackTop.prototype.setScrollTop = function setScrollTop(value) {
+	        var targetNode = (this.props.target || getDefaultTarget)();
+	        if (targetNode === window) {
+	            document.body.scrollTop = value;
+	            document.documentElement.scrollTop = value;
+	        } else {
+	            targetNode.scrollTop = value;
+	        }
+	    };
+
+	    BackTop.prototype.componentDidMount = function componentDidMount() {
+	        this.handleScroll();
+	        this.scrollEvent = (0, _addEventListener2["default"])((this.props.target || getDefaultTarget)(), 'scroll', this.handleScroll);
+	    };
+
+	    BackTop.prototype.componentWillUnmount = function componentWillUnmount() {
+	        if (this.scrollEvent) {
+	            this.scrollEvent.remove();
+	        }
+	    };
+
+	    BackTop.prototype.render = function render() {
+	        var _props = this.props,
+	            _props$prefixCls = _props.prefixCls,
+	            prefixCls = _props$prefixCls === undefined ? 'ant-back-top' : _props$prefixCls,
+	            _props$className = _props.className,
+	            className = _props$className === undefined ? '' : _props$className,
+	            children = _props.children;
+
+	        var classString = (0, _classnames2["default"])(prefixCls, className);
+	        var defaultElement = _react2["default"].createElement(
+	            'div',
+	            { className: prefixCls + '-content' },
+	            _react2["default"].createElement(_icon2["default"], { className: prefixCls + '-icon', type: 'to-top' })
+	        );
+	        // fix https://fb.me/react-unknown-prop
+	        var divProps = (0, _omit2["default"])(this.props, ['prefixCls', 'className', 'children', 'visibilityHeight']);
+	        var backTopBtn = this.state.visible ? _react2["default"].createElement(
+	            'div',
+	            (0, _extends3["default"])({}, divProps, { className: classString, onClick: this.scrollToTop }),
+	            children || defaultElement
+	        ) : null;
+	        return _react2["default"].createElement(
+	            _rcAnimate2["default"],
+	            { component: '', transitionName: 'fade' },
+	            backTopBtn
+	        );
+	    };
+
+	    return BackTop;
+	}(_react2["default"].Component);
+
+	exports["default"] = BackTop;
+
+	BackTop.defaultProps = {
+	    visibilityHeight: 400
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 540 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports["default"] = getScroll;
+	function getScroll(target, top) {
+	    if (typeof window === 'undefined') {
+	        return 0;
+	    }
+	    var prop = top ? 'pageYOffset' : 'pageXOffset';
+	    var method = top ? 'scrollTop' : 'scrollLeft';
+	    var isWindow = target === window;
+	    var ret = isWindow ? target[prop] : target[method];
+	    // ie6,7,8 standard mode
+	    if (isWindow && typeof ret !== 'number') {
+	        ret = window.document.documentElement[method];
+	    }
+	    return ret;
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 541 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _css = __webpack_require__(536);
+
+	var _backTop = __webpack_require__(539);
+
+	var _backTop2 = _interopRequireDefault(_backTop);
+
+	var _css2 = __webpack_require__(243);
+
+	var _row = __webpack_require__(255);
+
+	var _row2 = _interopRequireDefault(_row);
+
+	var _css3 = __webpack_require__(473);
+
+	var _col = __webpack_require__(441);
+
+	var _col2 = _interopRequireDefault(_col);
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _mobile_header = __webpack_require__(531);
+
+	var _mobile_header2 = _interopRequireDefault(_mobile_header);
+
+	var _mobile_footer = __webpack_require__(532);
+
+	var _mobile_footer2 = _interopRequireDefault(_mobile_footer);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var MobileNewsDetails = function (_React$Component) {
+		_inherits(MobileNewsDetails, _React$Component);
+
+		function MobileNewsDetails() {
+			_classCallCheck(this, MobileNewsDetails);
+
+			var _this = _possibleConstructorReturn(this, (MobileNewsDetails.__proto__ || Object.getPrototypeOf(MobileNewsDetails)).call(this));
+
+			_this.state = {
+				newsItem: ''
+			};
+			return _this;
+		}
+
+		_createClass(MobileNewsDetails, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var _this2 = this;
+
+				var myFetchOptions = {
+					method: 'GET'
+				};
+				fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=getnewsitem&uniquekey=" + this.props.params.uniquekey, myFetchOptions).then(function (response) {
+					return response.json();
+				}).then(function (json) {
+					_this2.setState({ newsItem: json });
+					document.title = _this2.state.newsItem.title + " - React News | React 驱动的新闻平台";
+				});
+			}
+		}, {
+			key: 'createMarkup',
+			value: function createMarkup() {
+				return { __html: this.state.newsItem.pagecontent };
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ id: 'mobileDetailsContainer' },
+					_react2.default.createElement(_mobile_header2.default, null),
+					_react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							_row2.default,
+							null,
+							_react2.default.createElement(
+								_col2.default,
+								{ span: 24, className: 'container' },
+								_react2.default.createElement('div', { className: 'articleContainer', dangerouslySetInnerHTML: this.createMarkup() })
+							)
+						),
+						_react2.default.createElement(_mobile_footer2.default, null),
+						_react2.default.createElement(_backTop2.default, null)
+					)
+				);
+			}
+		}]);
+
+		return MobileNewsDetails;
+	}(_react2.default.Component);
+
+	exports.default = MobileNewsDetails;
 
 /***/ }
 /******/ ]);
