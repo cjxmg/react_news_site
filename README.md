@@ -12,12 +12,14 @@
 
 此项目是根据慕课网教程仿制的，通过此项目也确实学到了很多东西，现在分享出来，也算是我的一个学习总结，[完整的视频教程链接](http://pan.baidu.com/s/1nuVL3hJ)
 
-对了，觉得好的话记得给个 **star** 哦~~ (✪ω✪)
+对了，觉得好的话不要吝啬你的 **star** 哦~~ (✪ω✪)
 
 ## 效果图
-iOS 预览  |  Android 请直接扫码下载体验
+适配了移动端，pc端直接打开上面的链接
+
+移动端 预览  |  直接扫码打开网页
 :-:|:-:
-![ios-demo.gif](./doc/asset/ios-demo-v1.4.1.gif) | ![安卓下载二维码](./doc/asset/Im.JS-v1.4.0.apk.png)
+![ios-demo.gif](./doc/img/mobile_show.png) | ![安卓下载二维码](./doc/img/qrcode.png)
 
 ## 运行项目
 
@@ -25,169 +27,179 @@ iOS 预览  |  Android 请直接扫码下载体验
 ```shell
 npm install
 ```
-**进入开发模式**  
+**进入开发模式**
 ```shell
 npm run dev
 // or
-react-native run-android
+webpack-dev-server --inline --hot
+// 之后打开 localhost:8080 查看
 ```
-**Release 包生成**
-[Running On Device](http://facebook.github.io/react-native/docs/running-on-device.html)  
-[Generating Signed APK](http://facebook.github.io/react-native/docs/signed-apk-android.html)
-
-## [im.js-server](https://github.com/im-js/im.js-server)
-> 基于 socket.io + koa2 + [cloverx](https://github.com/clover-x/cloverx)(自用 RestuFul 框架)
-
-服务端用到了 [cloverx-doc](https://github.com/clover-x/cloverx-doc) 从接口注释生成 `Swagger` 在线调试文档，还自带了一个输出格式化器，用来保证 `Api` 接口输出的一致性，纯手撸的，有兴趣可以看下。附一张效果图:  
-
-![cloverx-doc-example](./doc/asset/cloverx-doc-example.png)
+如果还没安装node的同学，可把 index.html 里的 script 改成下面的形式，然后直接打开`index.html`即可
+![index](./doc/img/index.png)
 
 
-## 组件库
-> 开发本项目的时候，要求自己尽量手写基础组件，基础组件与业务无关，可通用
+## [webpack](http://webpack.github.io/docs/)配置
 
-组件库地址：[UiLibrary](https://github.com/im-js/im.js/tree/master/UiLibrary)
+> webpack是一款模块加载器兼打包 工具，它能把各种资源，例如JS（含JSX）、coffee、样式（含less/sass）、图片等都作为模块来使用和处理。
 
-通过更改 app.json 的 appMode 字段，进行组件调试模式（UiLibrary）和 Im 模式（ImClient）的切换
+ react的组件功能很好用，在一个项目中，有些组件可能由不同的人所开发，所以时常需要引入其他的脚本文件，虽然可以用命名空间的办法来解决，但最后在html页面中通过script标签引入各类组件和文件时，还是会显着异常混乱，各模块之间的依赖，先后加载顺序都得人为控制，会极大的降低开发效率，而且项目中用到了es6的语法，需要用到babel来进行es6的转化，所以选择了webpack来进行前端自动化的管理
 
-## 开发笔记
-* [《从零开始搭建一个多端 IM》贰：页面导航模式设计- Navigator 导航](https://github.com/plusmancn/plusmancn.github.com/blob/master/2017/B3-rn-navigator-model-2.md)  
-* [《从零开始搭建一个多端 IM》壹：页面导航模式设计- TabBar 导航栏](https://github.com/plusmancn/plusmancn.github.com/blob/master/2017/B2-rn-navigator-model-1.md)
+ webpack配置文件：webpack.config.js
 
-## TODO
-接下来的开发重点在
+ ```javascript
+ module.exports = {
+   entry: __dirname + '/src/js/root.js',
+   output: {
+     path: __dirname + '/src/',
+     filename: 'bundle.js'
+   },
+   module: {
+     loaders: [
+       {
+         test: /\.js?$/,
+         exclude: /node_modules/,
+         loader: 'babel-loader',
+         query: {
+           presets: ['react', 'es2015 '], //设定babel的转码规则
+           "plugins": [
+             ["import", { libraryName: "antd", "style": "css" }] // `style: true` 会加载 less 文件
+           ]
+         }
+       },
+       {
+         test: /\.css$/,
+         loader: 'style!css-loader'
+       }
+     ]
+   }
+ }
+ ```
+当运行`webpack`命令时会自动把文件打包在./src目录下
 
-* socket 集群间通讯和管理（大量精力会在这里，还是服务器擅长一点）
-* 聊天室体验优化
 
-**计划中**  
+## [ANT DESIGN](https://ant.design/index-cn)
 
-- [x] 应用内离线消息，基于 `Reids` 实现。
-- [ ] **Important** [聊天室] 聊天室重构，使用 `FlatList` 和 `SectionList` 替换 `ListView`
-- [ ] **Important** [聊天室] 优化加载历史消息下拉加载更多体验，实现连续滑屏。 [Issue#1](https://github.com/im-js/im.js/issues/1)
-- [ ] `Ack` 消息触达、已读等状态回调。
-- [ ] 添加群聊支持
-- [ ] 公众号菜单以及对应后台 `Dashboard` 开发
-- [ ] 服务器升级为 `https` 和 `wss`
+![ANT DESIGN](./doc/img/antd.png)
 
-**或许会做**  
+> 一个 UI 设计框架，采用 React 封装的一套 Ant Design 的组件库，比较好用，可快速构建一个样式丰富的站点
 
-- [ ] 集成微信登录
-- [ ] 集成一个第三方推送服务
-
-**已知 Bug 列表**
-- [ ] `rn` 的 `Text` 控件，即使指定 `numberOfLines={1}`，消息如果以 `\n` 结尾，也会造成显示成 2 行。
-
-
-# 技术文档
-> 应用层消息事件和数据格式约定
-
-## Paylaod
-### 基础定义
+antd的组件使用十分方便，官方文档也比较详细
 ```javascript
-{
-    from: String('用户ID'),
-    to: String('用户ID'),
-    uuid: String('消息唯一UUID'),
-    // 用于存储消息内容
-    msg: {
-        ......
-    },
-    ext: {
-        avatar: String('用户头像地址'),
-        name: String('用户姓名'),
-        // 可使用 moment().startOf('minute').fromNow() 格式化
-        timestamp: timestamp(毫秒),
-    },
-    // 不参与网络传输，本地传递拓展字段位置
-    localeExt: {
-        ......
+import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
+import { DatePicker } from 'antd';
+ReactDOM.render(<DatePicker />, mountNode);  //也可传入参数
+```
+如果只需要用到其中的几个组件，则引入全部antd的样式则会显得多余，官方文档推荐了一个package： `babel-plugin-import`，配置使用后只需引入组件就行，不用理会样式，`babel-plugin-import`会自动按需加载需要的样式，而忽略那些多余的样式
+```javascript
+// babel-plugin-import 会帮助你加载 JS 和 CSS
+import { DatePicker } from 'antd';
+```
+## React + Es6
+> 用es6的语法写react组件会有一些不同，比如。。
+
+#### ** 组件的定义 **
+* es5语法：
+  ```javascript
+  var Component = React.createClass({
+    render: function() {
+      return <h1>Hello World</h1>;
     }
-}
-```
-### msg 字段定义
-对象必须包含如下字段
+  });
+  ```
 
-字段 | 定义     | 可选值
-:----|:---------|:-------------
-type | 消息类型 | `txt`
+* es6语法：
+  ```javascript
+  class Component extends React.Component {
+    render() {
+      return (
+        <h1>Hello World</h1>
+      );
+    }
+  };
+  ```
 
-**消息类型**  
-```javascript
-// txt - 文本类型消息
-{
-    type: 'txt',
-    content: '文本内容',
-}
-```
+#### ** 定义组件的state属性 **
+* es5语法：
+  ```javascript
+  var Component = React.createClass({
+    getInitialState: function() {
+      return {text: 'World'};
+    },
+    render: function() {
+      return <h1>Hello {this.state.text}</h1>;
+    }
+  });
+  ```
+* es6语法：
+  ```javascript
+  class Component extends React.Component {
+    constructor() {
+      super(); //子类没有自己的this对象，而是继承父类的this对象，然后对其进行加工。如果不调用super方法，子类就得不到this对象。
+  	this.state = {text: 'World'};
+    }
+    render() {
+      return (
+        <h1>Hello {this.state.text}</h1>
+      );
+    }
+  };
+  ```
+#### ** 组件事件处理函数的this差异 **
+* es5语法：
+  ```javascript
+  var Component = React.createClass({
+    getInitialState: function() {
+      return {text: 'World'};
+    },
+    handleClick: function() {
+      this.setState({text: 'React'});
+    },
+    render: function() {
+      return <h1 onClick={this.handleClick}>Hello {this.state.text}</h1>;
+    }
+  });
+  ```
+  用es5写法时，在事件处理函数handleClick中，this指向的是组件本身，所以this有setState方法。
 
-### ext 字段定义
-对象必须包含如下字段
+* es6语法：
+  ```javascript
+  class Component extends React.Component {
+    constructor() {
+      super(); //子类没有自己的this对象，而是继承父类的this对象，然后对其进行加工。如果不调用super方法，子类就得不到this对象。
+  	this.state = {text: 'World'};
+    }
 
-字段 | 定义     | 可选值
-:----|:---------|:-------------
-timestamp | 消息创建时间 | UnixTimestamp(毫秒)
+    handleClick() {
+      this.setState({text: 'React'});
+    }
 
-### 群聊与私聊
-在消息传递层面，群聊和私聊共用一套事件机制，对于客户端来说，都是收到了某个用户的消息。
+    render() {
+      return (
+        <h1 onClick={this.handleClick.bind(this)}>Hello {this.state.text}</h1>
+      );
+    }
+  };
+  ```
+  使用es6语法时，如果绑定事件时直接用`<h1 onClick={this.handleClick}>`,则函数handleClick里的this为`null`,调用`this.setState`方法时会报错，所以需改为`<h1 onClick={this.handleClick.bind(this)}>`,用当前组件对象替换之前的`null`，成为新的this
 
-服务器层面，一个群的定义是 “业务逻辑圈定的一群用户”，当一个 `payload` 的投递对象是一个群时，
-服务器需要向这个群内的所有有效用户，发送 `message` 事件。
 
-群聊的优化点在于，如何保证一个群内的用户尽可能多的在一个 `socket` 节点上，以此来降低 `socket` 节点间通讯的开销。
 
-## 消息事件
-### Event: `message`
-* `payloads: Array<Paylaod>` - Payload 数组，新消息在数组尾部
+## 一些相关链接
+* [HTML to JSX Compiler](http://magic.reactjs.net/htmltojsx.htm) ：可将html代码转换成jsx形式
 
-客户端之间无法直接发送消息，需要由 `socket` 服务器转发。  
-客户端和服务端建立 `socket` 连接后，每个 `emit`, `on` 的对象都是远端，而非本地端。   
-客户端的所有 `im` 消息，都将通过监听 `message` 事件来接收。  
+* [ANT DESIGN - 一个ui设计语言](https://ant.design/index-cn)
 
-**交互时序如下：**  
-![message 交互时序图](./doc/asset/meesage-order.jpg)
+* [React 中文文档](https://tianxiangbing.github.io/react-cn/docs/getting-started.html)
 
-### Event: `disconnect`
-发生在服务器和客户端之间的 `socket` 连接断开时。  
+* [webpack 2.2 中文文档](http://www.css88.com/doc/webpack2/)
 
-这个事件将更改用户状态为 `offline`。
+* [前端编码规范](https://giscafer.gitbooks.io/front-end-manual/content/) ：算是比较详细的，包含编码规范和优化等
 
-### Event: `connection`
-* `socket` - socket 连接对象
+* [阮一峰的react入门](http://www.ruanyifeng.com/blog/2015/03/react.html) ：简单易懂，配套demo，适合初学者入门
 
-发生在服务器和客户端之间的 `socket` 连接建立、重连成功时。
+* [阮一峰的es6入门](http://es6.ruanyifeng.com/)
 
-### Event: `user:online`
-* `data: Object` - 业务数据
+* [入门Webpack，看这篇就够了](http://www.jianshu.com/p/42e11515c10f#) ：写的很不错，逐级深入，有点长，耐心看完
 
-当客户端存在登录用户信息且 `socket` 处于连接状态时，客户端向服务器发送用户上线事件。
-
-在 `im.js` 设计中，`data` 中存放了如下信息，这个事件将更改用户的状态为 `online`
-```javascript
-{
-    userId: String('用户ID')
-}
-```
-
-## 用户状态裁决
-[AppState](http://facebook.github.io/react-native/docs/appstate.html) 状态与 socket、用户在线状态关系。
-
-State          | background | inactive | active
-:--------------|:-----------|:---------|:-------
-socket-ios     | close      | close    | connect
-socket-android | close      | \        | connect
-user-status    | offline    | offline  | online
-
-## 离线消息机制
-当用户状态为 `offline` 时候，触发离线消息机制。
-
-[im.js.server](https://github.com/plusmancn/im.js.server) 的实现基于 `Redis`，单用户离线队列命名规则为 `offline:queue:userId:${userId}`，存储结构为 `Lists`。
-
-当用户上线时候，客户端向服务器发送 `user:online` 事件，服务器以数组的形式返回对应用户的离线消息，并清空离线缓存。
-
-## ACK 处理
-[socket.emit(eventName[, ...args][, ack])](https://github.com/socketio/socket.io-client/blob/master/docs/API.md#socketemiteventname-args-ack) 提供了 `Ack` 回调。
-
-此处 `Ack` 函数返回的状态，指的是单个 `socket` 连接两端点间消息是否送达成功，不代表对方用户是否收到（因为消息是由服务转发的）。
-
-如果要做消息已读、是否送达等状态，需要在应用层继续做开发。
+## 后记
+初次写这么长的技术文章，前端这条路还很长，我也会不断的学习更多新知识，如果有写的不对，不好的地方，虚心接受大家的指点~

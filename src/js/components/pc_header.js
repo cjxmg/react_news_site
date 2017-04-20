@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col, Menu, Icon, Modal, Button, Tabs, Form, Input, notification } from 'antd';
+import {Link} from 'react-router';
 
 const TabPane = Tabs.TabPane;
 
@@ -44,7 +45,7 @@ class PcHeader extends React.Component{
 
 		this.props.form.validateFields((err, values) => {
     	// console.log(values.username);
-    	// console.log(values.password); 
+    	// console.log(values.password);
 
     	//因为还没做登录注册功能，告诉用户一声
     	notification.open({
@@ -59,9 +60,9 @@ class PcHeader extends React.Component{
 		this.props.form.validateFields();
 	}
 
-	render(){ 
+	render(){
 		const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-		
+
 		//当用户输入值之后，又把值删了，就会出错，提示用户值不能为空
 		const usernameError = isFieldTouched('username') && getFieldError('username');
     const passwordError = isFieldTouched('password') && getFieldError('password');
@@ -69,15 +70,15 @@ class PcHeader extends React.Component{
     const r_passwordError = isFieldTouched('r_password') && getFieldError('r_password');
 
 		return (
-			<Row> 
+			<Row>
     		<Col span={1}></Col>
     		<Col span={4}>
-    			<a href="/" className="logo">
+    			<Link to="/" className="logo">
     				<img src="./src/images/logo.png" alt="logo"/>
     				<span>ReactNews</span>
-    			</a>
+    			</Link>
     		</Col>
-    		<Col span={18}> 
+    		<Col span={18}>
 					<Menu mode="horizontal" onClick={this.navActive.bind(this)} selectedKeys={[this.state.current]}>
 				  	<Menu.Item key="top">
 				  		<Icon type="appstore"/>头条
@@ -120,7 +121,7 @@ class PcHeader extends React.Component{
 	          	<Tabs type="card">
 								<TabPane tab="登录" key="1">
 									<Form onSubmit={this.handleSubmit.bind(this)}>
-										
+
 										<Form.Item label="账户" validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
 											{getFieldDecorator('username', {
             						rules: [{ required: true, message: '请输入用户名'}],
@@ -128,14 +129,14 @@ class PcHeader extends React.Component{
             					<Input prefix={<Icon type="user"/>} placeholder="请输入您的账号"/>
           						)}
 										</Form.Item>
-										
+
 										<Form.Item label="密码" validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
 											{getFieldDecorator('password', {
             						rules: [{ required: true, message: '请输入密码' }],
           						})(
             					<Input prefix={<Icon type="lock"/>} type="password" placeholder="请输入您的密码"/>
           						)}
-											
+
 										</Form.Item>
 
 										<Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError(['username', 'password']))}>登录</Button>
@@ -146,7 +147,7 @@ class PcHeader extends React.Component{
 
 										<Form.Item label="账户" validateStatus={r_usernameError ? 'error' : ''} help={r_usernameError || ''}>
 											{getFieldDecorator('r_username', {
-            						rules: [{ required: true, message: '请输入用户名' }], 
+            						rules: [{ required: true, message: '请输入用户名' }],
           						})(
             					<Input prefix={<Icon type="user"/>} placeholder="请输入您的账号"/>
           						)}
@@ -158,7 +159,7 @@ class PcHeader extends React.Component{
           						})(
             					<Input prefix={<Icon type="user"/>} type="password" placeholder="请输入您的密码" />
           						)}
-											
+
 										</Form.Item>
 
 										<Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError(['r_username', 'r_password']))}>注册</Button>
@@ -170,9 +171,9 @@ class PcHeader extends React.Component{
     		</Col>
       	<Col span={1}></Col>
   		</Row>
-		) 
+		)
 	}
-} 
+}
 
 //不使用Form.create的话getFieldDecorator为undefined
 export default PcHeader = Form.create({})(PcHeader);
