@@ -97,7 +97,7 @@ import { DatePicker } from 'antd';
 ## React + Es6
 > 用es6的语法写react组件会有一些不同，比如。。
 
-#### ** 组件的定义 **
+#### 组件的定义
 * es5语法：
   ```javascript
   var Component = React.createClass({
@@ -118,7 +118,7 @@ import { DatePicker } from 'antd';
   };
   ```
 
-#### ** 定义组件的state属性 **
+#### 定义组件的state属性
 * es5语法：
   ```javascript
   var Component = React.createClass({
@@ -144,7 +144,7 @@ import { DatePicker } from 'antd';
     }
   };
   ```
-#### ** 组件事件处理函数的this差异 **
+#### 组件事件处理函数的this差异
 * es5语法：
   ```javascript
   var Component = React.createClass({
