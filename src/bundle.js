@@ -37546,7 +37546,7 @@
 	if (process.env.NODE_ENV !== 'production') {
 	  warning2 = function warning2(type, message) {
 	    if (typeof console !== 'undefined' && console.warn) {
-	      console.warn(type, message);
+	      // console.warn(type, message);
 	    }
 	  };
 	}
