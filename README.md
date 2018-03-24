@@ -5,7 +5,7 @@
 
 项目主页 [Github-react_news_site](https://github.com/cjxmg/react_news_site)
 
-演示地址 [ReactNews](http://cjxmg.0290.bftii.com/project/react_news_site/)
+演示地址 [ReactNews](http://superxmg.site/project/react_news_site)
 
 ## 写在前面
 之前自学过前端自动化工具和angular，但一直没有搭建过一个完整的项目，于是这次认真的做了个基于react新闻网站，自动化工具采用webpack，由于使用了es6的语法，需要用到Babel，Babel是一个广泛使用的转码器，可以将ES6代码转为ES5代码。
