@@ -8,7 +8,7 @@
 演示地址 [ReactNews](http://superxmg.site/project/react_news_site)
 
 ## 写在前面
-之前自学过前端自动化工具和angular，但一直没有搭建过一个完整的项目，于是这次认真的做了个基于react新闻网站，自动化工具采用webpack，由于使用了es6的语法，需要用到Babel，Babel是一个广泛使用的转码器，可以将ES6代码转为ES5代码。
+学习了react与webpack自动化打包，期间开发了一些小demo，为了巩固所学，从零开始用webpack搭建项目，开发了一个基于react的新闻网站，可供大家借鉴，由于使用了es6的语法，需要用到Babel，Babel是一个广泛使用的转码器，可以将ES6代码转为ES5代码。
 
 
 觉得好的同学可以给个**star**，万分感谢~ (✪ω✪)
